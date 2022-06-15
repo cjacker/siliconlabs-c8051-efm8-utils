@@ -1,0 +1,164 @@
+# Adapter pack file for Studio.
+#
+label=Adapter pack for c8051 Devices
+
+featureLevel=11
+
+adapter_types=EC3,UDA,Toolstick
+
+path=.,win32,win64,linux,macosx
+
+executable(flash8051:linux.x86_64) {
+  exe=flash8051
+  lib=libslab8051.so
+  lib=libslabhiddevice.so
+}
+
+executable(flash8051:linux.x86) {
+  exe=flash8051
+  lib=libslab8051.so
+  lib=libslabhiddevice.so
+}
+
+executable(flash8051:win32.x86) {
+  exe=flash8051.exe
+  lib=slab8051.dll
+  lib=slabhiddevice.dll
+  lib=libgcc_s_dw2-1.dll
+  lib=libstdc++-6.dll
+  lib=mingwm10.dll
+}
+
+executable(flash8051:win32.x86_64) {
+  exe=flash8051.exe
+  lib=slab8051.dll
+  lib=slabhiddevice.dll
+  lib=libgcc_s_seh-1.dll
+  lib=libstdc++-6.dll
+  lib=libwinpthread-1.dll
+}
+
+executable(flash8051:macosx.x86_64) {
+  exe=flash8051
+  lib=libslab8051.dylib
+  lib=libslabhiddevice.dylib
+}
+
+executable(siagentc8051:linux.x86_64) {
+  exe=siagentc8051
+  lib=libslab8051.so
+  lib=libslabhiddevice.so
+  lib=libsiagent.so
+}
+
+executable(siagentc8051:linux.x86) {
+  exe=siagentc8051
+  lib=libslab8051.so
+  lib=libslabhiddevice.so
+  lib=libsiagent.so
+}
+
+executable(siagentc8051:win32.x86) {
+  exe=siagentc8051.exe
+  lib=slab8051.dll
+  lib=slabhiddevice.dll
+  lib=siagent.dll
+  lib=libgcc_s_dw2-1.dll
+  lib=libstdc++-6.dll
+  lib=mingwm10.dll
+}
+
+executable(siagentc8051:win32.x86_64) {
+  exe=siagentc8051.exe
+  lib=slab8051.dll
+  lib=slabhiddevice.dll
+  lib=siagent.dll
+  lib=libgcc_s_seh-1.dll
+  lib=libstdc++-6.dll
+  lib=libwinpthread-1.dll
+}
+
+executable(siagentc8051:macosx.x86_64) {
+  exe=siagentc8051
+  lib=libslab8051.dylib
+  lib=libslabhiddevice.dylib
+  lib=libsiagent.dylib
+}
+
+executable(cptstreamer:linux.x86_64) {
+  exe=cptstreamer_c8051
+  lib=libsiagent.so
+  lib=libsegger_support.so
+}
+
+executable(cptstreamer:linux.x86) {
+  exe=cptstreamer_c8051
+  lib=libsiagent.so
+  lib=libsegger_support.so
+}
+
+executable(cptstreamer:win32.x86) {
+  exe=cptstreamer_c8051.exe
+  lib=siagent.dll
+  lib=segger_support.dll
+  lib=libgcc_s_dw2-1.dll
+  lib=libstdc++-6.dll
+  lib=mingwm10.dll
+}
+
+executable(cptstreamer:win32.x86_64) {
+  exe=cptstreamer_c8051.exe
+  lib=siagent.dll
+  lib=segger_support.dll
+  lib=libgcc_s_seh-1.dll
+  lib=libstdc++-6.dll
+  lib=libwinpthread-1.dll
+}
+
+executable(cptstreamer:macosx.x86_64) {
+  exe=cptstreamer_c8051
+  lib=libsiagent.dylib
+  lib=libsegger_support.dylib
+}
+
+# TouchXpress/cpt devices is not allowed to be debugged, but we need this "debug" 
+# function to read from the devices in XpressConfigurator. 
+function(debug:mcu.8051.*,ffd.touchxpress.*) {
+  cmd=$(siagentc8051) [ -date ${dateStr} ]
+}
+
+function(debuggers:mcu.8051.*,ffd.touchxpress.*) {
+  cmd=$(siagentc8051) -list
+}
+
+function(help) {
+  cmd=$(flash8051) -?
+}
+
+function(upload:mcu.8051.*,ffd.touchxpress.*) {
+  cmd=$(flash8051) ( -sn ${sn} ) ( -tif ${tif} ) ( -upload ${file} )  [ -erasemode ${erasemode} ] [ -clkstrobe ${clkstrobe} ] [ -keeppower ${keeppower} ]
+}
+
+function(erase:mcu.8051.*,ffd.touchxpress.*) {
+  cmd=$(flash8051) ( -sn ${sn} ) ( -tif ${tif} ) -erase
+}
+
+function(lock:mcu.8051.*,ffd.touchxpress.*) {
+  cmd=$(flash8051) ( -sn ${sn} ) ( -tif ${tif} ) -lock
+}
+
+function(unlock:mcu.8051.*,ffd.touchxpress.*) {
+  cmd=$(flash8051) ( -sn ${sn} ) ( -tif ${tif} ) -unlock
+}
+
+function(checklocked:mcu.8051.*,ffd.touchxpress.*) {
+  cmd=$(flash8051) ( -sn ${sn} ) ( -tif ${tif} ) -checklocked
+}
+
+function(serialports) {
+  cmd=$(cptstreamer) -ports
+}
+
+function(cptstreamer:mcu.8051.c8051.*,ffd.touchxpress.*) {
+  cmd=$(cptstreamer)
+}

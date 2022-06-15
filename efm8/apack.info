@@ -1,0 +1,103 @@
+# Adapter pack file for Studio.
+#
+label=EFM8 adapter pack
+
+featureLevel=11
+
+adapter_types=JLink
+
+path=.,win32,win64,linux,macosx
+
+executable(siagentefm8:linux.x86_64) {
+  exe=siagentefm8
+  lib=libjlinkarm.so
+  lib=libsiagent.so
+  lib=libsegger_support.so
+}
+
+executable(siagentefm8:win32.x86_64) {
+  exe=siagentefm8.exe
+  lib=JLink_x64.dll
+  lib=siagent.dll
+  lib=segger_support.dll
+  lib=libgcc_s_seh-1.dll
+  lib=libstdc++-6.dll
+  lib=libwinpthread-1.dll
+}
+
+executable(siagentefm8:macosx.x86_64) {
+  exe=siagentefm8
+  lib=libjlinkarm.dylib
+  lib=libsiagent.dylib
+  lib=libsegger_support.dylib
+}
+
+executable(flashefm8:linux.x86_64) {
+  exe=flashefm8
+  lib=libjlinkarm.so
+}
+
+executable(flashefm8:win32.x86_64) {
+  exe=flashefm8.exe
+  lib=JLink_x64.dll
+  lib=libgcc_s_seh-1.dll
+  lib=libstdc++-6.dll
+  lib=libwinpthread-1.dll
+}
+
+executable(flashefm8:macosx.x86_64) {
+  exe=flashefm8
+  lib=libjlinkarm.dylib
+}
+
+executable(cptstreamer:linux.x86_64) {
+  exe=cptstreamer_efm8
+  lib=libjlinkarm.so
+  lib=libsiagent.so
+  lib=libsegger_support.so
+}
+
+executable(cptstreamer:win32.x86_64) {
+  exe=cptstreamer_efm8.exe
+  lib=JLink_x64.dll
+  lib=siagent.dll
+  lib=segger_support.dll
+  lib=libgcc_s_seh-1.dll
+  lib=libstdc++-6.dll
+  lib=libwinpthread-1.dll
+}
+
+executable(cptstreamer:macosx.x86_64) {
+  exe=cptstreamer_efm8
+  lib=libjlinkarm.dylib
+  lib=libsiagent.dylib
+  lib=libsegger_support.dylib
+}
+
+function(debug:mcu.8051.efm8.*) {
+  cmd=$(siagentefm8) [ -date ${dateStr} ]
+}
+
+function(debuggers:mcu.8051.efm8.*) {
+  cmd=$(siagentefm8) -list
+}
+
+function(help) {
+  cmd=$(siagentefm8) -?
+}
+
+function(upload:mcu.8051.efm8.*) {
+  cmd=$(flashefm8) ( -sn ${sn} | -ip ${addr} ) ( -tif ${tif} ) ( -part ${part} ) ( -upload ${file} ) [ -erasemode ${erasemode} ]  [ -jlinkspeed ${jlinkspeed} ]
+}
+
+function(erase:mcu.8051.efm8.*) {
+  cmd=$(flashefm8) ( -sn ${sn} | -ip ${addr} ) ( -tif ${tif} ) ( -part ${part} ) -erase
+}
+
+function(serialports) {
+  cmd=$(cptstreamer) -ports
+}
+
+function(cptstreamer:mcu.8051.efm8.*) {
+  cmd=$(cptstreamer)
+}

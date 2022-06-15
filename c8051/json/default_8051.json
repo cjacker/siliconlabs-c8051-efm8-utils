@@ -1,0 +1,281 @@
+{
+  "schemaVersion": 2, 
+  "coreAttributes": {
+	"family": "8051",
+	"bigEndian": true, 
+	"addressSize": 16, 
+	"registerSize": 8, 
+    "paged": true
+  }, 
+  "memorySpaces": [
+     {
+      "addressSize": 16, 
+      "desc": "External RAM", 
+      "id": "X", 
+      "label": "XRAM", 
+      "specifier": "xdata"
+    }
+  ],
+  "memoryRegions": [
+    {
+      "id": "RAM", 
+      "label": "RAM", 
+      "desc": "8051 RAM", 
+      "space": "R", 
+      "size": "0x100", 
+      "access": "read-write", 
+      "addr": "0x00"
+    }, 
+    {
+      "id": "XRAM", 
+      "label": "XRAM", 
+      "desc": "External RAM", 
+      "space": "X", 
+      "size": "0x10000", 
+      "access": "read-write", 
+      "addr": "0x00"
+    }, 
+    {
+      "id": "CODE", 
+      "label": "CODE", 
+      "desc": "Code memory (flash)", 
+      "space": "C", 
+      "size": "0x20000", 
+      "access": "read-write", 
+      "addr": "0x00"
+    }, 
+    {
+      "id": "SFR", 
+      "label": "SFR", 
+      "desc": "Special Function Registers", 
+      "space": "S", 
+      "size": "0x80", 
+      "access": "read-write", 
+      "addr": "0x80"
+    }
+  ],
+  "registerGroups": [
+    {
+      "id": "General", 
+      "label": "General 8051 Registers", 
+      "desc": "General 8051 Registers", 
+      "space": "S", 
+      "registers": [
+        {
+          "id": "DPTR", 
+          "label": "Data Pointer", 
+          "desc": "-", 
+          "resetValue": "0x0", 
+          "resetMask": "TBD", 
+          "page": "ALL", 
+          "size": 16, 
+          "access": "read-write", 
+          "addr": "0x82",
+          "fields": [
+            {
+              "id": "DPH", 
+              "label": "Data Pointer High", 
+              "desc": "-", 
+              "bitOffset": 8, 
+              "bitWidth": 8,
+              "access": "read-write"
+            },
+            {
+              "id": "DPL", 
+              "label": "Data Pointer Low", 
+              "desc": "-", 
+              "bitOffset": 0, 
+              "bitWidth": 8,
+              "access": "read-write"
+            }
+          ]
+        }, 
+        {
+          "id": "ACC", 
+          "label": "Accumulator", 
+          "desc": "-", 
+          "resetValue": "0x0", 
+          "resetMask": "TBD", 
+          "page": "ALL", 
+          "size": 8, 
+          "access": "read-write", 
+          "addr": "0xe0"
+        }, 
+        {
+          "id": "B", 
+          "label": "B Register", 
+          "desc": "-", 
+          "resetValue": "0x0", 
+          "resetMask": "TBD", 
+          "page": "ALL", 
+          "size": 8, 
+          "access": "read-write", 
+          "addr": "0xf0"
+        }, 
+        {
+          "id": "PSW", 
+          "label": "Program Status Word", 
+          "desc": "-", 
+          "resetValue": "0x0", 
+          "resetMask": "TBD", 
+          "size": 8, 
+          "page": "ALL", 
+          "addr": "0xd0", 
+          "access": "read-write", 
+          "fields": [
+            {
+              "id": "PARITY", 
+              "label": "Parity Flag", 
+              "desc": "This bit is set to logic 1 if the sum of the eight bits in the accumulator is odd and cleared if the sum is even.", 
+              "bitOffset": 0, 
+              "bitWidth": 1, 
+              "enumeratedValues": [
+                {
+                  "desc": "", 
+                  "value": 0, 
+                  "name": "EVEN"
+                }, 
+                {
+                  "desc": "", 
+                  "value": 1, 
+                  "name": "ODD"
+                }
+              ], 
+              "access": "read-only"
+            }, 
+            {
+              "id": "F1", 
+              "label": "User Flag 1", 
+              "desc": "This is a bit-addressable, general purpose flag for use under software control.", 
+              "bitOffset": 1, 
+              "bitWidth": 1, 
+              "enumeratedValues": [
+                {
+                  "desc": "", 
+                  "value": 0, 
+                  "name": "CLEAR"
+                }, 
+                {
+                  "desc": "", 
+                  "value": 1, 
+                  "name": "SET"
+                }
+              ], 
+              "access": "read-write"
+            }, 
+            {
+              "id": "OV", 
+              "label": "Overflow Flag", 
+              "desc": "This bit is set to 1 under the following circumstances:\n -An ADD, ADDC, or SUBB instruction causes a sign-change overflow.\n -A MUL instruction results in an overflow (result is greater than 255).\n -A DIV instruction causes a divide-by-zero condition.\nThe OV bit is cleared to 0 by the ADD, ADDC, SUBB, MUL, and DIV instructions in all other cases.", 
+              "bitOffset": 2, 
+              "bitWidth": 1, 
+              "enumeratedValues": [
+                {
+                  "desc": "", 
+                  "value": 0, 
+                  "name": "CLEAR"
+                }, 
+                {
+                  "desc": "", 
+                  "value": 1, 
+                  "name": "SET"
+                }
+              ], 
+              "access": "read-write"
+            }, 
+            {
+              "id": "RS", 
+              "label": "Register Bank Select", 
+              "desc": "Select which register bank is used during register accesses.", 
+              "bitOffset": 3, 
+              "bitWidth": 2, 
+              "enumeratedValues": [
+                {
+                  "desc": "", 
+                  "value": 0, 
+                  "name": "BANK0"
+                }, 
+                {
+                  "desc": "", 
+                  "value": 1, 
+                  "name": "BANK1"
+                }, 
+                {
+                  "desc": "", 
+                  "value": 2, 
+                  "name": "BANK2"
+                }, 
+                {
+                  "desc": "", 
+                  "value": 3, 
+                  "name": "BANK3"
+                }
+              ], 
+              "access": "read-write"
+            }, 
+            {
+              "id": "F0", 
+              "label": "User Flag 0", 
+              "desc": "-", 
+              "bitOffset": 5, 
+              "bitWidth": 1, 
+              "enumeratedValues": [
+                {
+                  "desc": "", 
+                  "value": 0, 
+                  "name": "CLEAR"
+                }, 
+                {
+                  "desc": "", 
+                  "value": 1, 
+                  "name": "SET"
+                }
+              ], 
+              "access": "read-write"
+            }, 
+            {
+              "id": "AC", 
+              "label": "Auxiliary Carry Flag", 
+              "desc": "This bit is set when the last arithmetic operation resulted in a carry into (addition) or a borrow from (subtraction) the high order nibble. It is cleared to logic 0 by all other arithmetic operations.", 
+              "bitOffset": 6, 
+              "bitWidth": 1, 
+              "enumeratedValues": [
+                {
+                  "desc": "", 
+                  "value": 0, 
+                  "name": "NOCARRY"
+                }, 
+                {
+                  "desc": "", 
+                  "value": 1, 
+                  "name": "CARRY"
+                }
+              ], 
+              "access": "read-write"
+            }, 
+            {
+              "id": "CY", 
+              "label": "Carry Flag", 
+              "desc": "This bit is set when the last arithmetic operation resulted in a carry (addition) or a borrow (subtraction). It is cleared to logic 0 by all other arithmetic operations.", 
+              "bitOffset": 7, 
+              "bitWidth": 1, 
+              "enumeratedValues": [
+                {
+                  "desc": "", 
+                  "value": 0, 
+                  "name": "NOCARRY"
+                }, 
+                {
+                  "desc": "", 
+                  "value": 1, 
+                  "name": "CARRY"
+                }
+              ], 
+              "access": "read-write"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
