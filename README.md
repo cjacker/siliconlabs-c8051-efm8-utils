@@ -141,7 +141,7 @@ sudo flashefm8 -sn 000440033272 -tif c2 -part efm8sb10f8g -upload EFM8SB1_Oscill
 ```
 
 # udev rules
-All below commands run with `sudo`. to avoid using `sudo`, please copy '98-silabs.rules' and '99-silabs-jlink.rules' to '/etc/udev/rules.d' and run:
+All above commands run with `sudo`. to avoid using `sudo`, please copy '98-silabs.rules' and '99-silabs-jlink.rules' to '/etc/udev/rules.d' and run:
 
 ```
 sudo udevadm control --reload-rules
