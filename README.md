@@ -2,7 +2,7 @@
 
 Standalone C8051/EFM8 flash tool (device8051, flash8051 and flashefm8) support jtag/c2 with Silicon labs' usb debug adapter and EFM8 Starter Kit with Toolstick or Jlink debugger on board.
 
-These utilities located at `SimplicityStudio_v5/developer/adapter_packs`, and part of them is opensource, for example `libslabhiddevice.so`.
+These utilities located at `SimplicityStudio_v5/developer/adapter_packs`, and part of them is opensource, you can find the source code of `libslabhiddevice.so` in https://www.silabs.com/documents/public/software/USBXpressHostSDK-Linux.tar and the headers for 'libslab8051.so' at https://community.silabs.com/s/article/linux-flash-programming-utilities-for-efm8-c8051fxxx?language=en_US
 
 Thanks Silicon Labs for native Linux support.
 
